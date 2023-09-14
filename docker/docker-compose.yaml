@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  database:
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Password*123
+
+
+  book-service:
+    image: book-service:latest
+    build: 
+      context: ../
+      dockerfile: /src/BookSwap.BooksService/Dockerfile
+    ports:
+      - "5000:80"
+    depends_on:
+      - database
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__BooksServiceDb=Server=database;Database=BookSwap;User Id=sa;Password=Password*123;Persist Security Info=False;Encrypt=False;TrustServerCertificate=False;
