@@ -2,9 +2,8 @@
 using BookSwap.BooksService.Modules.Books.Commands.Delete;
 using BookSwap.BooksService.Modules.Books.Commands.Update;
 using BookSwap.BooksService.Modules.Books.Entities;
-using BookSwap.BooksService.Modules.Books.Interfaces;
 using BookSwap.BooksService.Modules.Books.Queries.Get;
-using BookSwap.Shared.Core.Extensions;
+using BookSwap.BooksService.Modules.Books.Queries.List;
 using BookSwap.Shared.Core.Models;
 using BookSwap.Shared.Core.Modules;
 using BookSwap.Shared.Core.Swagger;
@@ -14,30 +13,18 @@ using Microsoft.AspNetCore.Mvc;
 namespace BookSwap.BooksService.Modules.Books;
 
 public class BooksModule : IModule
-{    
+{
     public IEndpointRouteBuilder MapEndpoints(IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapGet("/api/books", async (
-                [FromServices] IBooksRepository repo,
-                [FromQuery] string? author,
-                [FromQuery] string? title
-            ) => {
-                var books = await repo.ListAsync(b => b
-                    .WhereIf(e => e.Author.Contains(author!), !string.IsNullOrEmpty(author))
-                    .WhereIf(e => e.Title.Contains(title!), !string.IsNullOrEmpty(title))
-                );
-
-                return Results.Ok(books);
+        endpoints.MapGet("/api/books", async ([FromServices] IMediator mediator, [AsParameters] ListBookRequest request) => {
+                return Results.Ok(await mediator.Send(request));
             })
             .WithName("ListBooks")
             .WithDescription("Lists books by Filter")
             .ProducesList<Book>()
             .WithOpenApi();
 
-        endpoints.MapPost("/api/books", async (
-                [FromServices] IMediator mediator, 
-                AddBookCommand command
-            ) => {
+        endpoints.MapPost("/api/books", async ([FromServices] IMediator mediator, AddBookCommand command) => {
                 var id = await mediator.Send(command);
                 return Results.Created($"/api/books/{id}", new CreatedResponse(id));
             })
@@ -48,13 +35,9 @@ public class BooksModule : IModule
             .ProducesBadRequest()
             .WithOpenApi();
 
-        endpoints.MapPut("/api/books/{id:guid}", async (
-                [FromServices] IMediator mediator,
-                [FromRoute] Guid id,
-                UpdateBookCommand command
-            ) => {
-                await mediator.Send(command);
-            
+        endpoints.MapPut("/api/books/{id:guid}", async ([FromServices] IMediator mediator, [FromRoute] Guid id, UpdateBookCommand command) => {
+                await mediator.Send(command with { Id = id });
+
                 return Results.Ok();
             })
             .WithName("UpdateBook")
@@ -65,20 +48,16 @@ public class BooksModule : IModule
             .WithOpenApi();
 
 
-        endpoints.MapGet("/api/books/{id:guid}",async (
-                    [FromServices] IMediator mediator, 
-                    [FromRoute] Guid id
-                ) => Results.Ok(await mediator.Send(new GetBookQuery(id)))
-            )
+        endpoints.MapGet("/api/books/{id:guid}", async ([FromServices] IMediator mediator, [FromRoute] Guid id) => {
+                var request = new GetBookQuery(id);
+                return Results.Ok(await mediator.Send(request));
+            })
             .WithName("GetBook")
             .WithDescription("Gets a book by id")
             .ProducesNotFound()
             .WithOpenApi();
 
-        endpoints.MapDelete("/api/books/{id:guid}", async (
-                [FromServices] IMediator mediator, 
-                Guid id
-            ) => {
+        endpoints.MapDelete("/api/books/{id:guid}", async ([FromServices] IMediator mediator, Guid id) => {
                 await mediator.Send(new DeleteBookCommand(id));
                 return Results.Ok();
             })

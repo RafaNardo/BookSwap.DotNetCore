@@ -1,6 +1,6 @@
-﻿using MediatR;
-using System.Text.Json.Serialization;
-using BookSwap.Shared.Core.Mediator;
+﻿using BookSwap.Shared.Core.Mediator;
+using MediatR;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace BookSwap.BooksService.Modules.Books.Commands.Update
 {
@@ -10,7 +10,7 @@ namespace BookSwap.BooksService.Modules.Books.Commands.Update
         string? Description
     ) : IRequest, ITransactionableRequest
     {
-        [JsonIgnore]
+        [SwaggerSchema(ReadOnly = true)]
         public Guid Id { get; init; }
     }
 }

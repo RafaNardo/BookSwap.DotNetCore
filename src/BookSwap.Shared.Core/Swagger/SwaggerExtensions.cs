@@ -10,10 +10,8 @@ namespace BookSwap.Shared.Core.Swagger
     {
         public static IServiceCollection RegisterSwagger(this IServiceCollection services)
         {
-            // Add services to the container.
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c => c.EnableAnnotations());
 
             return services;
         }
