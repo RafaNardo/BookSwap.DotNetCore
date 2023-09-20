@@ -1,11 +1,14 @@
-﻿using BookSwap.Shared.Core.Di.Exceptions;
+﻿using System.Reflection;
+using BookSwap.Shared.Core.Cache;
+using BookSwap.Shared.Core.Exceptions;
+using BookSwap.Shared.Core.Mediator;
 using BookSwap.Shared.Core.Modules;
+using BookSwap.Shared.Core.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
-namespace BookSwap.Shared.Core.Di
+namespace BookSwap.Shared.Core.App
 {
     public static class AppExtensions
     {
@@ -13,8 +16,9 @@ namespace BookSwap.Shared.Core.Di
         {
             builder.Services.RegisterMediatR();
             builder.Services.RegisterSwagger();
+            builder.Services.AddStackExchangeRedis(builder.Configuration, instance: assembly.GetName().Name!);
             builder.Services.RegisterModules(assembly, builder.Configuration);
-            
+
             return builder;
         }
 
@@ -28,7 +32,7 @@ namespace BookSwap.Shared.Core.Di
             return app;
         }
 
-        public static WebApplication MigrateDatabases(this WebApplication app, Assembly assembly)
+        private static WebApplication MigrateDatabases(this WebApplication app, Assembly assembly)
         {
             var dbContextTypes = assembly
                 .GetTypes()

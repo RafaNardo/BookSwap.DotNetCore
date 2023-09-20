@@ -1,11 +1,10 @@
-﻿using BookSwap.Shared.Core.Exceptions;
-using BookSwap.Shared.Core.Models;
+﻿using BookSwap.Shared.Core.Models;
 using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 
-namespace BookSwap.Shared.Core.Di.Exceptions
+namespace BookSwap.Shared.Core.Exceptions
 {
     public static class ExceptionExtensions
     {

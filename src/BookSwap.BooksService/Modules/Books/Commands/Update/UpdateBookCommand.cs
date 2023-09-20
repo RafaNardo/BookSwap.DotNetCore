@@ -1,16 +1,14 @@
-﻿using BookSwap.BooksService.Modules.Books.Endpoints;
-using BookSwap.Shared.Data.Transactions;
-using MediatR;
+﻿using MediatR;
 using System.Text.Json.Serialization;
+using BookSwap.Shared.Core.Data.Transactions;
 
 namespace BookSwap.BooksService.Modules.Books.Commands.Update
 {
-    [UseTransaction]
     public record UpdateBookCommand(
         string Title,
         string Author,
         string? Description
-    ) : IRequest
+    ) : IRequest, ITransactionableRequest
     {
         [JsonIgnore]
         public Guid Id { get; init; }

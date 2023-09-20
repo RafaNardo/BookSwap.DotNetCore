@@ -1,10 +1,9 @@
-﻿using BookSwap.Shared.Data.Transactions;
+﻿using System.Reflection;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
-namespace BookSwap.Shared.Core.Di
+namespace BookSwap.Shared.Core.Mediator
 {
     public static class IMediatorExtensions
     {
@@ -13,10 +12,10 @@ namespace BookSwap.Shared.Core.Di
             var assembly = Assembly.GetEntryAssembly();
             services.AddValidatorsFromAssembly(assembly);
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UseTransactionPipelineBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(TransactionPipelineBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CachingPipelineBehavior<,>));
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly!));
             return services;
         }
     }
-
 }

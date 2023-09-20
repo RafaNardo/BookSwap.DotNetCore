@@ -2,7 +2,7 @@
 using BookSwap.Shared.Core.Modules.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookSwap.Shared.Data.Repositories;
+namespace BookSwap.Shared.Core.Data.Repositories;
 
 public abstract class Repository<TEntity, TDbContext> : IRepository<TEntity>
     where TEntity : Entity
@@ -25,7 +25,7 @@ public abstract class Repository<TEntity, TDbContext> : IRepository<TEntity>
         return entity;
     }
 
-    public async Task<IEnumerable<TEntity>> ListAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> filters = null)
+    public async Task<IEnumerable<TEntity>> ListAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>>? filters = null)
     {
         var query = Context.Set<TEntity>().AsNoTracking().AsQueryable();
 

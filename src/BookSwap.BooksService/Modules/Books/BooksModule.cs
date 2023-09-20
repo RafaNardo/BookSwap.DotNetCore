@@ -1,11 +1,13 @@
-﻿using BookSwap.BooksService.Modules.Books.Commands.Delete;
+﻿using BookSwap.BooksService.Modules.Books.Commands.Add;
+using BookSwap.BooksService.Modules.Books.Commands.Delete;
 using BookSwap.BooksService.Modules.Books.Commands.Update;
-using BookSwap.BooksService.Modules.Books.Endpoints;
 using BookSwap.BooksService.Modules.Books.Entities;
 using BookSwap.BooksService.Modules.Books.Interfaces;
+using BookSwap.BooksService.Modules.Books.Queries.Get;
 using BookSwap.Shared.Core.Extensions;
 using BookSwap.Shared.Core.Models;
 using BookSwap.Shared.Core.Modules;
+using BookSwap.Shared.Core.Swagger;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -63,12 +65,11 @@ public class BooksModule : IModule
             .WithOpenApi();
 
 
-        endpoints.MapGet("/api/books/{id:guid}", async (
-                [FromServices] IBooksRepository repo, 
-                [FromRoute] Guid id
-            ) => {
-                return Results.Ok(await repo.GetByIdAsync(id));
-            })
+        endpoints.MapGet("/api/books/{id:guid}",async (
+                    [FromServices] IMediator mediator, 
+                    [FromRoute] Guid id
+                ) => Results.Ok(await mediator.Send(new GetBookQuery(id)))
+            )
             .WithName("GetBook")
             .WithDescription("Gets a book by id")
             .ProducesNotFound()

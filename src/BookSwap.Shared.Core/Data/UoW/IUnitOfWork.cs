@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace BookSwap.Shared.Data.UoW
+﻿namespace BookSwap.Shared.Core.Data.UoW
 {
     public interface IUnitOfWork
     {

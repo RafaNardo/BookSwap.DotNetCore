@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace BookSwap.BooksService.Modules.Books.Endpoints
+namespace BookSwap.BooksService.Modules.Books.Commands.Add
 {
     public class AddBookCommandValidator : AbstractValidator<AddBookCommand>
     {

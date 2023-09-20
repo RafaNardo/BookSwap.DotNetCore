@@ -1,7 +1,7 @@
 ﻿using BookSwap.BooksService.Modules.Books.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookSwap.BooksService.Modules.Books.Data.Context;
+namespace BookSwap.BooksService.Modules.Data.Context;
 
 public class BooksServiceDbContext : DbContext
 {

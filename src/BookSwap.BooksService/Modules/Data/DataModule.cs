@@ -1,8 +1,8 @@
-﻿using BookSwap.BooksService.Modules.Books.Data.Context;
-using BookSwap.BooksService.Modules.Books.Data.Repositories;
-using BookSwap.BooksService.Modules.Books.Interfaces;
+﻿using BookSwap.BooksService.Modules.Books.Interfaces;
+using BookSwap.BooksService.Modules.Data.Context;
+using BookSwap.BooksService.Modules.Data.Repositories;
+using BookSwap.Shared.Core.Data.UoW;
 using BookSwap.Shared.Core.Modules;
-using BookSwap.Shared.Data.UoW;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookSwap.BooksService.Modules.Data

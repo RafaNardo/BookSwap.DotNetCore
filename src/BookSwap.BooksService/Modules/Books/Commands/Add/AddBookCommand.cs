@@ -1,12 +1,11 @@
-﻿using BookSwap.Shared.Data.Transactions;
+﻿using BookSwap.Shared.Core.Data.Transactions;
 using MediatR;
 
-namespace BookSwap.BooksService.Modules.Books.Endpoints
+namespace BookSwap.BooksService.Modules.Books.Commands.Add
 {
-    [UseTransaction]
     public record AddBookCommand(
         string Title,
         string Author,
         string? Description
-    ) : IRequest<Guid>;
+    ) : IRequest<Guid>, ITransactionableRequest;
 }

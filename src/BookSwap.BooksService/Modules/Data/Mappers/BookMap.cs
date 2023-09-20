@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace BookSwap.BooksService.Modules.Books.Data.Mappers;
+namespace BookSwap.BooksService.Modules.Data.Mappers;
 
 public class BookMap : IEntityTypeConfiguration<Book>
 {

@@ -2,7 +2,7 @@
 using BookSwap.BooksService.Modules.Books.Interfaces;
 using MediatR;
 
-namespace BookSwap.BooksService.Modules.Books.Endpoints
+namespace BookSwap.BooksService.Modules.Books.Commands.Add
 {
     public record AddBookCommandHandler(IBooksRepository BooksRepository) : IRequestHandler<AddBookCommand, Guid>
     {

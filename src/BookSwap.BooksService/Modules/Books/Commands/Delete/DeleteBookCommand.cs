@@ -1,8 +1,7 @@
-﻿using BookSwap.Shared.Data.Transactions;
+﻿using BookSwap.Shared.Core.Data.Transactions;
 using MediatR;
 
 namespace BookSwap.BooksService.Modules.Books.Commands.Delete
 {
-    [UseTransaction]
-    public record DeleteBookCommand(Guid Id) : IRequest;
+    public record DeleteBookCommand(Guid Id) : IRequest, ITransactionableRequest;
 }

@@ -1,5 +1,5 @@
-using BookSwap.Shared.Core.Di;
 using System.Reflection;
+using BookSwap.Shared.Core.App;
 
 var builder = WebApplication.CreateBuilder(args);
 

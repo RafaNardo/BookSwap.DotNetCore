@@ -1,15 +1,17 @@
-﻿using BookSwap.Shared.Data.UoW;
+﻿using System.Reflection;
+using BookSwap.Shared.Core.Data.Transactions;
+using BookSwap.Shared.Core.Data.UoW;
 using MediatR;
-using System.Reflection;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace BookSwap.Shared.Data.Transactions
+namespace BookSwap.Shared.Core.Mediator
 {
-    public class UseTransactionPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    public class TransactionPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public UseTransactionPipelineBehavior(IUnitOfWork unitOfWork)
+        public TransactionPipelineBehavior(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -19,7 +21,7 @@ namespace BookSwap.Shared.Data.Transactions
             RequestHandlerDelegate<TResponse> next, 
             CancellationToken cancellationToken)
         {
-            var useTransaction = typeof(TRequest).GetCustomAttribute<UseTransactionAttribute>() != null;
+            var useTransaction = typeof(TRequest).IsAssignableTo(typeof(ITransactionableRequest));
 
             if (useTransaction)
             {
