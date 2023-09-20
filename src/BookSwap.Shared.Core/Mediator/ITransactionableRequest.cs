@@ -1,4 +1,4 @@
-﻿namespace BookSwap.Shared.Core.Data.Transactions
+﻿namespace BookSwap.Shared.Core.Mediator
 {
     public interface ITransactionableRequest
     {

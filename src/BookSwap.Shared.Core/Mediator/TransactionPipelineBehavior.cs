@@ -1,8 +1,5 @@
-﻿using System.Reflection;
-using BookSwap.Shared.Core.Data.Transactions;
-using BookSwap.Shared.Core.Data.UoW;
+﻿using BookSwap.Shared.Core.Data.UoW;
 using MediatR;
-using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace BookSwap.Shared.Core.Mediator
 {

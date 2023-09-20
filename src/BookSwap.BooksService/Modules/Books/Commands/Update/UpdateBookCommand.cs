@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using System.Text.Json.Serialization;
-using BookSwap.Shared.Core.Data.Transactions;
+using BookSwap.Shared.Core.Mediator;
 
 namespace BookSwap.BooksService.Modules.Books.Commands.Update
 {
