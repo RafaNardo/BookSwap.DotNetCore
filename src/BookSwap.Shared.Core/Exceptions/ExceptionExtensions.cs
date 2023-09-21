@@ -27,13 +27,17 @@ namespace BookSwap.Shared.Core.Exceptions
 
             switch (exceptionHandlerFeature?.Error)
             {
+                case BadRequestException badRequestEx:
+                    var badReqResponse = ErrorResponse.FromBadRequestException(badRequestEx);
+                    await Results.BadRequest(badReqResponse).ExecuteAsync(context);
+                    break;
                 case StatusCodeException:
                     await Results.NotFound().ExecuteAsync(context);
                     break;
-                case ValidationException exception:
+                case ValidationException validationEx:
                 {
-                    var response = ErrorResponse.FromValidationException(exception);
-                    await Results.BadRequest(response).ExecuteAsync(context);
+                    var validationResponse = ErrorResponse.FromValidationException(validationEx);
+                    await Results.BadRequest(validationResponse).ExecuteAsync(context);
                     break;
                 }
             }

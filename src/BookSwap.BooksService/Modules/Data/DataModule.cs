@@ -21,6 +21,7 @@ namespace BookSwap.BooksService.Modules.Data
             services.AddScoped<IUnitOfWork, UnitOfWork<BooksServiceDbContext>>();
             
             services.AddScoped<IBooksRepository, BooksRepository>();
+            services.AddScoped<IGenreRepository, GenreRepository>();
             
             return services;
         }

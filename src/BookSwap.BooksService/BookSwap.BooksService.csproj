@@ -28,7 +28,15 @@
 
     <ItemGroup>
       <ProjectReference Include="..\BookSwap.Shared.Core\BookSwap.Shared.Core.csproj" />
+
+
+
+
+
+
     </ItemGroup>
+
+
 
 
 </Project>

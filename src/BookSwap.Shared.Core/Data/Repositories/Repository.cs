@@ -15,17 +15,17 @@ public abstract class Repository<TEntity, TDbContext> : IRepository<TEntity>
         Context = dbContext;
     }
 
-    public async Task<TEntity> GetByIdAsync(Guid id, bool throwExceptionWhenNull = true)
+    public virtual async Task<TEntity> GetByIdAsync(Guid id, bool throwExceptionWhenNull = true)
     {
         var entity = await Context.Set<TEntity>().FindAsync(id);
 
-        if (entity is null)
+        if (entity is null && throwExceptionWhenNull)
             throw new NotFoundException();
 
         return entity;
     }
 
-    public async Task<IEnumerable<TEntity>> ListAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>>? filters = null)
+    public virtual async Task<IEnumerable<TEntity>> ListAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>>? filters = null)
     {
         var query = Context.Set<TEntity>().AsNoTracking().AsQueryable();
 
@@ -35,21 +35,31 @@ public abstract class Repository<TEntity, TDbContext> : IRepository<TEntity>
         return await query.ToListAsync();
     }
 
-    public async Task<TEntity> AddAsync(TEntity entity)
+    public virtual async Task<bool> AnyAsync(Func<TEntity, bool>? filters = null)
+    {
+        var query = Context.Set<TEntity>().AsNoTracking().AsQueryable();
+
+        if (filters is not null)
+            return query.Any(filters);
+
+        return await query.AnyAsync();
+    }
+
+    public virtual async Task<TEntity> AddAsync(TEntity entity)
     {
         await Context.Set<TEntity>().AddAsync(entity);
 
         return entity;
     }
 
-    public async Task<TEntity> UpdateAsync(TEntity entity)
+    public virtual async Task<TEntity> UpdateAsync(TEntity entity)
     {
         Context.Set<TEntity>().Update(entity);
 
         return await Task.FromResult(entity);
     }
 
-    public async Task<TEntity> DeleteAsync(Guid id)
+    public virtual async Task<TEntity> DeleteAsync(Guid id)
     {
         var entity = await Context.Set<TEntity>().FindAsync(id);
 
@@ -59,5 +69,12 @@ public abstract class Repository<TEntity, TDbContext> : IRepository<TEntity>
         Context.Set<TEntity>().Remove(entity);
 
         return entity;
+    }
+    
+    public virtual async Task<TEntity> DeleteAsync(TEntity entity)
+    {
+        Context.Set<TEntity>().Remove(entity);
+
+        return await Task.FromResult(entity);
     }
 }   

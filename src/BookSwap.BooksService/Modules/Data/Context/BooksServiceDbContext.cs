@@ -6,6 +6,7 @@ namespace BookSwap.BooksService.Modules.Data.Context;
 public class BooksServiceDbContext : DbContext
 {
     public DbSet<Book> Books { get; set; } = null!;
+    public DbSet<BookGenre> BookGenres { get; set; } = null!;
 
     public BooksServiceDbContext(DbContextOptions<BooksServiceDbContext> options) : base(options) { }
 

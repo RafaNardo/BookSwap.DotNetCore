@@ -4,26 +4,20 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BookSwap.BooksService.Modules.Data.Mappers;
 
-public class BookMap : IEntityTypeConfiguration<Book>
+public class BookGenreMap : IEntityTypeConfiguration<BookGenre>
 {
-    public void Configure(EntityTypeBuilder<Book> builder)
+    public void Configure(EntityTypeBuilder<BookGenre> builder)
     {
-        builder.ToTable("Book");
+        builder.ToTable("BookGenre");
 
         builder.HasKey(x => x.Id);
-        
-        builder.Property(x => x.GenreId)
-            .IsRequired();
-        
-        builder.Property(x => x.Title)
-            .IsRequired()
-            .HasMaxLength(100);
 
-        builder.Property(x => x.Author)
+        builder.Property(x => x.Name)
             .IsRequired()
             .HasMaxLength(100);
 
         builder.Property(x => x.Description)
+            .IsRequired()
             .HasMaxLength(500);
 
         builder.Property(x => x.CreatedAt)
@@ -31,10 +25,5 @@ public class BookMap : IEntityTypeConfiguration<Book>
 
         builder.Property(x => x.UpdatedAt)
             .IsRequired(false);
-        
-        builder.HasOne(x => x.Genre)
-            .WithMany()
-            .HasForeignKey(x => x.GenreId)
-            .OnDelete(DeleteBehavior.Restrict);
     }
 }

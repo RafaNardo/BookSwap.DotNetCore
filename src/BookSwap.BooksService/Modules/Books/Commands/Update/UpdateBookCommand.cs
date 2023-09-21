@@ -5,6 +5,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace BookSwap.BooksService.Modules.Books.Commands.Update
 {
     public record UpdateBookCommand(
+        Guid GenreId,
         string Title,
         string Author,
         string? Description
