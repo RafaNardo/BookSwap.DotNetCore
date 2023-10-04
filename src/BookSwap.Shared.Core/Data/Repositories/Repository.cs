@@ -1,5 +1,5 @@
 ﻿using BookSwap.Shared.Core.Exceptions;
-using BookSwap.Shared.Core.Modules.Entities;
+using BookSwap.Shared.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookSwap.Shared.Core.Data.Repositories;

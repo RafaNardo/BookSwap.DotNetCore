@@ -6,19 +6,20 @@ namespace BookSwap.Shared.Core.Data.UoW
     {
         private readonly TDbContext _dbContext;
 
-        public UnitOfWork(TDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
+        public UnitOfWork(TDbContext dbContext) => _dbContext = dbContext;
 
         public async Task BeginTransactionAsync()
         {
             await _dbContext.Database.BeginTransactionAsync();
         }
 
-        public async Task CommitTransactionAsync()
+        public async Task SaveChangesAsync()
         {
             await _dbContext.SaveChangesAsync();
+        }
+        
+        public async Task CommitTransactionAsync()
+        {
             await _dbContext.Database.CommitTransactionAsync();
         }
 

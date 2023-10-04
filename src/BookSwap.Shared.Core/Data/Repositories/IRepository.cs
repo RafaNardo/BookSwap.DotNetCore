@@ -1,4 +1,4 @@
-﻿using BookSwap.Shared.Core.Modules.Entities;
+﻿using BookSwap.Shared.Core.Models;
 
 namespace BookSwap.Shared.Core.Data.Repositories;
 
