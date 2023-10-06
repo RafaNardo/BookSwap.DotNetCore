@@ -36,6 +36,7 @@ public class AddBookEndpoint : IEndpoint
             .ProducesCreated()
             .ProducesUnprocessableEntity()
             .ProducesBadRequest()
+            .WithValidator<AddBookRequest>()
             .WithTransaction()
             .WithOpenApi();
 

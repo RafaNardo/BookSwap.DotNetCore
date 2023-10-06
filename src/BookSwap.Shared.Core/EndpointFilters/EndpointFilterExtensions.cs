@@ -7,5 +7,8 @@ namespace BookSwap.Shared.Core.EndpointFilters
     {
         public static RouteHandlerBuilder WithTransaction(this RouteHandlerBuilder builder)
             => builder.AddEndpointFilter<TransactionEndpointFilter>();
+
+        public static RouteHandlerBuilder WithValidator<T>(this RouteHandlerBuilder builder)
+            => builder.AddEndpointFilter<ValidationFilter<T>>();
     }
 }

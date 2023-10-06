@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace BookSwap.BooksService.Migrations
+namespace BookSwap.BooksService.Modules.Books.Data.Context.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration

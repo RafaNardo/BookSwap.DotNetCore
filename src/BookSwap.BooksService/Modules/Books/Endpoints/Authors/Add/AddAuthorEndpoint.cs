@@ -29,6 +29,7 @@ public class AddAuthorEndpoint : IEndpoint
             .ProducesUnprocessableEntity()
             .ProducesBadRequest()
             .WithTransaction()
+            .WithValidator<AddAuthorRequest>()
             .WithOpenApi();
 
     public async Task<Guid> HandleAsync([FromBody] AddAuthorRequest request, CancellationToken ct)

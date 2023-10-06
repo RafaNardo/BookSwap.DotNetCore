@@ -1,4 +1,5 @@
 ﻿using BookSwap.BooksService.Modules.Books.Interfaces;
+using BookSwap.Shared.Core.EndpointFilters;
 using BookSwap.Shared.Core.Endpoints;
 using BookSwap.Shared.Core.Exceptions;
 using BookSwap.Shared.Core.Swagger;
@@ -34,6 +35,8 @@ namespace BookSwap.BooksService.Modules.Books.Endpoints.Books.Update
                 .ProducesUnprocessableEntity()
                 .ProducesBadRequest()
                 .ProducesOk()
+                .WithTransaction()
+                .WithValidator<UpdateBookRequest>()
                 .WithOpenApi();
 
         public async Task HandleAsync(

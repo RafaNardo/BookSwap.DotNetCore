@@ -1,6 +1,7 @@
 ﻿using BookSwap.BooksService.Modules.Books.Entities;
 using BookSwap.BooksService.Modules.Books.Interfaces;
 using BookSwap.Shared.Core.Data;
+using BookSwap.Shared.Core.EndpointFilters;
 using BookSwap.Shared.Core.Endpoints;
 using BookSwap.Shared.Core.Swagger;
 
@@ -18,6 +19,7 @@ public class ListBookEndpoint : IEndpoint
             .WithTags("Books")
             .WithDescription("Lists books by Filter")
             .ProducesList<Book>()
+            .WithValidator<ListBookRequest>()
             .WithOpenApi()
             .CacheOutput(p => p
                 .SetVaryByQuery(nameof(ListBookRequest.Author), nameof(ListBookRequest.Title))

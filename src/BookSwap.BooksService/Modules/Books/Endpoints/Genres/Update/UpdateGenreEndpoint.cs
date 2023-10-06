@@ -27,6 +27,7 @@ public class UpdateGenreEndpoint : IEndpoint
             .ProducesBadRequest()
             .ProducesOk()
             .WithTransaction()
+            .WithValidator<UpdateGenreRequest>()
             .WithOpenApi();
     
     public async Task HandleAsync([FromBody] UpdateGenreRequest request, [FromRoute] Guid id)

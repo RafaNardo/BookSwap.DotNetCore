@@ -27,6 +27,7 @@ public class AddGenreEndpoint : IEndpoint
             .ProducesUnprocessableEntity()
             .ProducesBadRequest()
             .WithTransaction()
+            .WithValidator<AddGenreRequest>()
             .WithOpenApi();
     
     public async Task<Guid> HandleAsync(AddGenreRequest request, CancellationToken cancellationToken)

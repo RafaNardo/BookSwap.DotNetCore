@@ -34,9 +34,5 @@
     <ItemGroup>
       <None Remove="Extensions\**" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Endpoints\Filters\" />
-    </ItemGroup>
 	
 </Project>

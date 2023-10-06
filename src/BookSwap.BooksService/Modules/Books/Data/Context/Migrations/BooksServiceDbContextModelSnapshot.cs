@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BookSwap.BooksService.Migrations
+namespace BookSwap.BooksService.Modules.Books.Data.Context.Migrations
 {
     [DbContext(typeof(BooksServiceDbContext))]
     partial class BooksServiceDbContextModelSnapshot : ModelSnapshot
