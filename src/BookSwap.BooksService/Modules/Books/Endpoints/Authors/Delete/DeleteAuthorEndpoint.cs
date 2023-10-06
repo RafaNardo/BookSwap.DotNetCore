@@ -25,7 +25,7 @@ namespace BookSwap.BooksService.Modules.Books.Endpoints.Authors.Delete
 
         private async Task HandleAsync([FromRoute] Guid id)
         {
-            var book = await _authorRepository.Find(id);
+            var book = await _authorRepository.FindAsync(id);
 
             await _authorRepository.DeleteAsync(book);
         }

@@ -24,7 +24,7 @@ namespace BookSwap.BooksService.Modules.Books.Endpoints.Authors.List
 
         public async Task<Author> HandleAsync([FromRoute] Guid id)
         {
-            return await _authorRepository.Find(id);
+            return await _authorRepository.FindAsync(id);
         }
     }
 }

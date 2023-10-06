@@ -1,4 +1,6 @@
-﻿using BookSwap.BooksService.Modules.Books.Interfaces;
+﻿using BookSwap.BooksService.Modules.Books.Entities;
+using BookSwap.BooksService.Modules.Books.Interfaces;
+using BookSwap.Shared.Core.Data.Specifications;
 using BookSwap.Shared.Core.EndpointFilters;
 using BookSwap.Shared.Core.Endpoints;
 using BookSwap.Shared.Core.Exceptions;
@@ -31,9 +33,11 @@ public record DeleteGenreEndpoint : IEndpoint
     
     public async Task HandleAsync([FromRoute] Guid id)
     {
-        var genre = await _genreRepository.Find(id);
+        var genre = await _genreRepository.FindAsync(id);
 
-        var hasBooks = await _booksRepository.AnyAsync(b => b.GenreId == genre.Id);
+        var spec = new Specification<Book>().AddCriteria(b => b.GenreId == genre.Id);
+
+        var hasBooks = await _booksRepository.AnyAsync(spec);
         
         if (hasBooks)
             throw new BadRequestException("Cannot delete genre with books");

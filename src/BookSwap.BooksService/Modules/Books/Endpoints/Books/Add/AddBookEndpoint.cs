@@ -42,11 +42,11 @@ public class AddBookEndpoint : IEndpoint
 
     public async Task<Guid> HandleAsync([FromBody] AddBookRequest request, CancellationToken ct)
     {
-        var genre = await _genreRepository.Find(request.GenreId, false);
+        var genre = await _genreRepository.FindAsync(request.GenreId, false);
         if (genre is null)
             throw new BadRequestException("Please provide a valid genre.");
 
-        var author = await _authorRepository.Find(request.AuthorId, false);
+        var author = await _authorRepository.FindAsync(request.AuthorId, false);
         if (author is null)
             throw new BadRequestException("Please provide a valid author.");
 

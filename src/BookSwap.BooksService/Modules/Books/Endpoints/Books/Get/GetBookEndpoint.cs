@@ -1,5 +1,6 @@
 ﻿using BookSwap.BooksService.Modules.Books.Entities;
 using BookSwap.BooksService.Modules.Books.Interfaces;
+using BookSwap.Shared.Core.Data.Specifications;
 using BookSwap.Shared.Core.Endpoints;
 using BookSwap.Shared.Core.Swagger;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,11 @@ public class GetBookEndpoint : IEndpoint
 
     public async Task<Book> HandleAsync([FromRoute] Guid id)
     {
-        return await _booksRepository.Find(id);
+        var spec = new Specification<Book>()
+            .AddCriteria(x => x.Id == id)
+            .AddInclude(x => x.Author)
+            .AddInclude(x => x.Genre);
+
+        return await _booksRepository.FindAsync(spec);
     }
 }

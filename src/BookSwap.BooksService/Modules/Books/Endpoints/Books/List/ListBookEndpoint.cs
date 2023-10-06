@@ -1,6 +1,7 @@
 ﻿using BookSwap.BooksService.Modules.Books.Entities;
 using BookSwap.BooksService.Modules.Books.Interfaces;
 using BookSwap.Shared.Core.Data;
+using BookSwap.Shared.Core.Data.Specifications;
 using BookSwap.Shared.Core.EndpointFilters;
 using BookSwap.Shared.Core.Endpoints;
 using BookSwap.Shared.Core.Swagger;
@@ -28,10 +29,14 @@ public class ListBookEndpoint : IEndpoint
 
     public async Task<IEnumerable<Book>> HandleAsync([AsParameters] ListBookRequest request)
     {
-        return await _bookRepository.ListAsync(b => b
-            .WhereIf(e => e.Author.Name.Contains(request.Author!), !string.IsNullOrEmpty(request.Author))
-            .WhereIf(e => e.Title.Contains(request.Title!), !string.IsNullOrEmpty(request.Title))
-        );
+        var spec = new Specification<Book>()
+            .AddCriteriaIf(x => x.Author.Name.Contains(request.Author!), !string.IsNullOrEmpty(request.Author))
+            .AddCriteriaIf(x => x.Title.Contains(request.Title!), !string.IsNullOrEmpty(request.Title))
+            .AddInclude(x => x.Author)
+            .AddInclude(x => x.Genre)
+            .AddOrderBy(x => x.Title);
+
+        return await _bookRepository.ListAsync(spec);
     }
 }
 

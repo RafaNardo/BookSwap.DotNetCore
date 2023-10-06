@@ -1,4 +1,5 @@
-﻿using BookSwap.Shared.Core.Exceptions;
+﻿using BookSwap.Shared.Core.Data.Specifications;
+using BookSwap.Shared.Core.Exceptions;
 using BookSwap.Shared.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,34 +16,47 @@ public abstract class Repository<TEntity, TDbContext> : IRepository<TEntity>
         Context = dbContext;
     }
 
-    public virtual async Task<TEntity> Find(Guid id, bool throwExceptionWhenNull = true)
+    public virtual async Task<TEntity> FindAsync(Guid id, bool throwNotFoundWhenNull = true)
     {
         var entity = await Context.Set<TEntity>().FindAsync(id);
 
-        if (entity is null && throwExceptionWhenNull)
+        if (entity is null && throwNotFoundWhenNull)
             throw new NotFoundException();
 
-        return entity;
+        return entity!;
     }
 
-    public virtual async Task<IEnumerable<TEntity>> ListAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>>? filters = null)
+    public virtual async Task<TEntity> FindAsync(ISpecification<TEntity> spec, bool throwNotFoundWhenNull = true)
     {
-        var query = Context.Set<TEntity>().AsNoTracking().AsQueryable();
+        var query = GetQuerableFromSpecitication(spec);
 
-        if (filters is not null)
-            query = filters(query);
+        var entity = await query.FirstOrDefaultAsync();
+
+        if (entity is null && throwNotFoundWhenNull)
+            throw new NotFoundException();
+
+        return entity!;
+    }
+
+    public virtual async Task<IEnumerable<TEntity>> ListAsync(ISpecification<TEntity> spec)
+    {
+        var query = GetQuerableFromSpecitication(spec);
 
         return await query.ToListAsync();
     }
 
-    public virtual async Task<bool> AnyAsync(Func<TEntity, bool>? filters = null)
+    public virtual async Task<bool> AnyAsync(ISpecification<TEntity> spec)
     {
-        var query = Context.Set<TEntity>().AsNoTracking().AsQueryable();
-
-        if (filters is not null)
-            return query.Any(filters);
+        var query = GetQuerableFromSpecitication(spec);
 
         return await query.AnyAsync();
+    }
+
+    public virtual async Task<bool> AnyAsync(Guid id)
+    {
+        return await Context
+            .Set<TEntity>()
+            .AnyAsync(x => x.Id == id);
     }
 
     public virtual async Task<TEntity> AddAsync(TEntity entity)
@@ -76,5 +90,30 @@ public abstract class Repository<TEntity, TDbContext> : IRepository<TEntity>
         Context.Set<TEntity>().Remove(entity);
 
         return await Task.FromResult(entity);
+    }
+
+    private IQueryable<TEntity> GetQuerableFromSpecitication(ISpecification<TEntity> spec)
+    {
+        var query = Context.Set<TEntity>().AsQueryable();
+
+        if (spec.Criterias.Any())
+        {
+            //spec.Criterias is a list of expressions, so we need to aggregate them
+            query = spec.Criterias.Aggregate(query, (current, criteria) => current.Where(criteria));
+        }
+
+        if (spec.Includes.Any())
+            query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));
+
+        if (spec.OrderBy is not null)
+            query = spec.OrderBy(query);
+
+        if (spec.Skip is not null)
+            query = query.Skip(spec.Skip.Value);
+
+        if (spec.Take is not null)
+            query = query.Take(spec.Take.Value);
+
+        return query;
     }
 }   

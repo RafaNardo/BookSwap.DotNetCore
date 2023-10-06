@@ -1,6 +1,7 @@
 ﻿using BookSwap.BooksService.Modules.Books.Entities;
 using BookSwap.BooksService.Modules.Books.Interfaces;
 using BookSwap.Shared.Core.Data;
+using BookSwap.Shared.Core.Data.Specifications;
 using BookSwap.Shared.Core.Endpoints;
 using BookSwap.Shared.Core.Swagger;
 using Microsoft.AspNetCore.Mvc;
@@ -23,9 +24,10 @@ public record ListBookGenreEndpoint : IEndpoint
 
     public async Task<IEnumerable<Genre>> HandleAsync([FromQuery] string? name)
     {
-        return await _genreRepository.ListAsync(q => 
-            q.WhereIf(g => g.Name.Contains(name!), !string.IsNullOrEmpty(name)) 
-        );
-    }
+        var spec = new Specification<Genre>()
+            .AddCriteriaIf(x => x.Name.Contains(name!), !string.IsNullOrEmpty(name))
+            .AddOrderBy(x => x.Name);
 
+        return await _genreRepository.ListAsync(spec);
+    }
 }

@@ -25,7 +25,7 @@ public class DeleteBookEndpoint : IEndpoint
 
     private async Task HandleAsync([FromRoute] Guid id)
     {
-        var book = await _booksRepository.Find(id);
+        var book = await _booksRepository.FindAsync(id);
       
         await _booksRepository.DeleteAsync(book);
     }

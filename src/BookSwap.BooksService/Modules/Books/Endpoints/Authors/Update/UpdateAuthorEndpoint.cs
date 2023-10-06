@@ -35,7 +35,7 @@ public class UpdateAuthorEndpoint : IEndpoint
         [FromRoute] Guid id,
         CancellationToken ct)
     {
-        var author = await _authorRepository.Find(id);
+        var author = await _authorRepository.FindAsync(id);
 
         author.Update(request.Name, request.About, request.ImageUrl);
 
