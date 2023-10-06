@@ -12,15 +12,18 @@ namespace BookSwap.BooksService.Modules.Books.Endpoints.Books.Update
         private readonly IOutputCacheStore _outputCacheStore;
         private readonly IBooksRepository _booksRepository;
         private readonly IGenreRepository _genreRepository;
-        
+        private readonly IAuthorRepository _authorRepository;
+
         public UpdateBookEndpoint(
             IBooksRepository booksRepository, 
             IGenreRepository genreRepository,
+            IAuthorRepository authorRepository,
             IOutputCacheStore outputCacheStore)
         {
-            _outputCacheStore = outputCacheStore;
             _booksRepository = booksRepository;
             _genreRepository = genreRepository;
+            _authorRepository = authorRepository;
+            _outputCacheStore = outputCacheStore;
         }
             
         public IEndpointConventionBuilder MapEndpoint(IEndpointRouteBuilder builder) 
@@ -39,17 +42,21 @@ namespace BookSwap.BooksService.Modules.Books.Endpoints.Books.Update
             CancellationToken ct
         )
         {
-            var book = await _booksRepository.GetByIdAsync(id);
+            var book = await _booksRepository.Find(id);
            
-            var newGenre = await _genreRepository.GetByIdAsync(request.GenreId, false);
-            if (newGenre is null)
+            var genre = await _genreRepository.Find(request.GenreId, false);
+            if (genre is null)
                 throw new BadRequestException("Please provide a valid genre.");
+
+            var author = await _authorRepository.Find(request.AuthorId, false);
+            if (author is null)
+                throw new BadRequestException("Please provide a valid author.");
 
             book.Update(
                  title: request.Title,
-                 author: request.Author,
+                 author: author,
                  description: request.Description,
-                genre: newGenre
+                genre: genre
             );
 
             await _booksRepository.UpdateAsync(book);

@@ -24,6 +24,6 @@ public record GetBookGenreEndpoint : IEndpoint
 
     public async Task<Genre> HandleAsync([FromRoute] Guid id)
     {
-        return await _genreRepository.GetByIdAsync(id);
+        return await _genreRepository.Find(id);
     }
 }

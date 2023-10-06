@@ -15,7 +15,7 @@ public abstract class Repository<TEntity, TDbContext> : IRepository<TEntity>
         Context = dbContext;
     }
 
-    public virtual async Task<TEntity> GetByIdAsync(Guid id, bool throwExceptionWhenNull = true)
+    public virtual async Task<TEntity> Find(Guid id, bool throwExceptionWhenNull = true)
     {
         var entity = await Context.Set<TEntity>().FindAsync(id);
 

@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BookSwap.BooksService.Modules.Books.Data.Context.Mappers;
 
-public class GenreMap : IEntityTypeConfiguration<Genre>
+public class AuthorMap : IEntityTypeConfiguration<Author>
 {
-    public void Configure(EntityTypeBuilder<Genre> builder)
+    public void Configure(EntityTypeBuilder<Author> builder)
     {
-        builder.ToTable("Genre");
+        builder.ToTable("Author");
 
         builder.HasKey(x => x.Id);
 
@@ -16,7 +16,11 @@ public class GenreMap : IEntityTypeConfiguration<Genre>
             .IsRequired()
             .HasMaxLength(100);
 
-        builder.Property(x => x.Description)
+        builder.Property(x => x.About)
+            .IsRequired()
+            .HasMaxLength(500);
+
+        builder.Property(x => x.ImageUrl)
             .IsRequired()
             .HasMaxLength(500);
 

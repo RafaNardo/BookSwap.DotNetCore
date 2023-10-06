@@ -11,17 +11,20 @@ namespace BookSwap.BooksService.Modules.Books.Endpoints.Books.Add;
 
 public class AddBookEndpoint : IEndpoint
 {
+    private readonly IOutputCacheStore _outputCacheStore;
     private readonly IBooksRepository _booksRepository;
     private readonly IGenreRepository _genreRepository;
-    private readonly IOutputCacheStore _outputCacheStore;
+    private readonly IAuthorRepository _authorRepository;
 
     public AddBookEndpoint(
-        IBooksRepository booksRepository, 
+        IBooksRepository booksRepository,
         IGenreRepository genreRepository,
+        IAuthorRepository authorRepository,
         IOutputCacheStore outputCacheStore)
     {
         _booksRepository = booksRepository;
         _genreRepository = genreRepository;
+        _authorRepository = authorRepository;
         _outputCacheStore = outputCacheStore;
     }
 
@@ -38,14 +41,18 @@ public class AddBookEndpoint : IEndpoint
 
     public async Task<Guid> HandleAsync([FromBody] AddBookRequest request, CancellationToken ct)
     {
-        var genre = await _genreRepository.GetByIdAsync(request.GenreId, false);
+        var genre = await _genreRepository.Find(request.GenreId, false);
         if (genre is null)
             throw new BadRequestException("Please provide a valid genre.");
-        
+
+        var author = await _authorRepository.Find(request.AuthorId, false);
+        if (author is null)
+            throw new BadRequestException("Please provide a valid author.");
+
         var book = new Book
         (
             title: request.Title,
-            author: request.Author,
+            author: author,
             description: request.Description,
             genre: genre
         );

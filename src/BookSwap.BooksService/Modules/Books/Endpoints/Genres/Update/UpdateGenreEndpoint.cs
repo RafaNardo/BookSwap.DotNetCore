@@ -31,7 +31,7 @@ public class UpdateGenreEndpoint : IEndpoint
     
     public async Task HandleAsync([FromBody] UpdateGenreRequest request, [FromRoute] Guid id)
     {
-        var genre = await _genreRepository.GetByIdAsync(id);
+        var genre = await _genreRepository.Find(id);
         
         genre.Update(request.Name, request.Description);
         

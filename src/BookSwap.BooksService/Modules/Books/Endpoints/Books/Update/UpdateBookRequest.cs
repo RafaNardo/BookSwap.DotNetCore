@@ -1,4 +1,4 @@
 ﻿namespace BookSwap.BooksService.Modules.Books.Endpoints.Books.Update;
 
-public record UpdateBookRequest(Guid GenreId, string Title, string Author, string? Description);
+public record UpdateBookRequest(Guid GenreId, Guid AuthorId, string Title, string? Description);
 

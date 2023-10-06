@@ -23,6 +23,6 @@ public class GetBookEndpoint : IEndpoint
 
     public async Task<Book> HandleAsync([FromRoute] Guid id)
     {
-        return await _booksRepository.GetByIdAsync(id);
+        return await _booksRepository.Find(id);
     }
 }

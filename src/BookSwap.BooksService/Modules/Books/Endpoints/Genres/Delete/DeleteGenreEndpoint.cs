@@ -31,7 +31,7 @@ public record DeleteGenreEndpoint : IEndpoint
     
     public async Task HandleAsync([FromRoute] Guid id)
     {
-        var genre = await _genreRepository.GetByIdAsync(id);
+        var genre = await _genreRepository.Find(id);
 
         var hasBooks = await _booksRepository.AnyAsync(b => b.GenreId == genre.Id);
         

@@ -30,6 +30,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Modules\Books\Data\Context\Migrations\" />
       <Folder Include="Modules\Books\Endpoints\Books\" />
     </ItemGroup>
 </Project>

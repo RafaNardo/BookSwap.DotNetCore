@@ -11,7 +11,7 @@ public class BooksRepository : Repository<Book, BooksServiceDbContext>, IBooksRe
 {
     public BooksRepository(BooksServiceDbContext context) : base(context) { }
 
-    public override async Task<Book> GetByIdAsync(Guid id, bool throwExceptionWhenNull = true)
+    public override async Task<Book> Find(Guid id, bool throwExceptionWhenNull = true)
     {
         var entity = await Context.Books
             .Include(x => x.Genre)

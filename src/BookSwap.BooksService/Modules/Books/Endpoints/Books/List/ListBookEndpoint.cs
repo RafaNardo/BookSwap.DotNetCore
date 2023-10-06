@@ -27,7 +27,7 @@ public class ListBookEndpoint : IEndpoint
     public async Task<IEnumerable<Book>> HandleAsync([AsParameters] ListBookRequest request)
     {
         return await _bookRepository.ListAsync(b => b
-            .WhereIf(e => e.Author.Contains(request.Author!), !string.IsNullOrEmpty(request.Author))
+            .WhereIf(e => e.Author.Name.Contains(request.Author!), !string.IsNullOrEmpty(request.Author))
             .WhereIf(e => e.Title.Contains(request.Title!), !string.IsNullOrEmpty(request.Title))
         );
     }

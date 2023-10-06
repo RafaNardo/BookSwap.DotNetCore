@@ -12,14 +12,7 @@ public class BookMap : IEntityTypeConfiguration<Book>
 
         builder.HasKey(x => x.Id);
 
-        builder.Property(x => x.GenreId)
-            .IsRequired();
-
         builder.Property(x => x.Title)
-            .IsRequired()
-            .HasMaxLength(100);
-
-        builder.Property(x => x.Author)
             .IsRequired()
             .HasMaxLength(100);
 
@@ -31,6 +24,17 @@ public class BookMap : IEntityTypeConfiguration<Book>
 
         builder.Property(x => x.UpdatedAt)
             .IsRequired(false);
+
+        //Foreign keys
+        builder.Property(x => x.AuthorId)
+            .IsRequired();
+
+        builder.HasOne(x => x.Author).WithMany()
+            .HasForeignKey(x => x.AuthorId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Property(x => x.GenreId)
+            .IsRequired();
 
         builder.HasOne(x => x.Genre)
             .WithMany()

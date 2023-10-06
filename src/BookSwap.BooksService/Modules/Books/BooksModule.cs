@@ -19,6 +19,7 @@ public class BooksModule : IModule
         builder.AddTransient<IUnitOfWork, UnitOfWork<BooksServiceDbContext>>();
 
         builder.AddScoped<IBooksRepository, BooksRepository>();
+        builder.AddScoped<IAuthorRepository, AuthorRepository>();
         builder.AddScoped<IGenreRepository, GenreRepository>();
 
         return builder;

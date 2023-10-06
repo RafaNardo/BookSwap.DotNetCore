@@ -5,7 +5,7 @@ using BookSwap.Shared.Core.Data.Repositories;
 
 namespace BookSwap.BooksService.Modules.Books.Data.Repositories;
 
-public class GenreRepository : Repository<Genre, BooksServiceDbContext>, IGenreRepository
+public class AuthorRepository : Repository<Author, BooksServiceDbContext>, IAuthorRepository
 {
-    public GenreRepository(BooksServiceDbContext context) : base(context) { }
+    public AuthorRepository(BooksServiceDbContext context) : base(context) { }
 }
