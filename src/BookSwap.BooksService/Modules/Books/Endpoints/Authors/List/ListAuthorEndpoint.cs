@@ -27,7 +27,9 @@ namespace BookSwap.BooksService.Modules.Books.Endpoints.Authors.List
         {
             var spec = new Specification<Author>()
                 .AddCriteriaIf(x => x.Name.Contains(name!), !string.IsNullOrEmpty(name))
-                .AddOrderBy(x => x.Name);
+                
+                .AddOrderBy(x => x.Name)
+                .AddOrderByDescending(x => x.Id);
 
             return await _authorRepository.ListAsync(spec);
         }

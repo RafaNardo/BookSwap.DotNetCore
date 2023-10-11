@@ -11,6 +11,7 @@ public interface IRepository<TEntity> where TEntity : Entity
     Task<bool> AnyAsync(ISpecification<TEntity> spec);
     Task<bool> AnyAsync(Guid id);
     Task<TEntity> AddAsync(TEntity entity);
+    Task<ICollection<TEntity>> AddRangeAsync(List<TEntity> entities);
     Task<TEntity> UpdateAsync(TEntity entity);
     Task<TEntity> DeleteAsync(Guid id);
     Task<TEntity> DeleteAsync(TEntity entity);

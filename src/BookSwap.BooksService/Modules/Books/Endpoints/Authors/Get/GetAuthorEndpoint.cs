@@ -1,6 +1,5 @@
 ﻿using BookSwap.BooksService.Modules.Books.Entities;
 using BookSwap.BooksService.Modules.Books.Interfaces;
-using BookSwap.Shared.Core.Endpoints;
 using BookSwap.Shared.Core.Swagger;
 using Microsoft.AspNetCore.Mvc;
 

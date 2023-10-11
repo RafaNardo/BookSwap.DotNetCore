@@ -1,3 +1,6 @@
+global using BookSwap.Shared.Core.Exceptions;
+global using BookSwap.Shared.Core.Endpoints;
+global using BookSwap.Shared.Core.EndpointFilters;
 using BookSwap.Shared.Core.DI;
 using FluentValidation;
 using System.Reflection;

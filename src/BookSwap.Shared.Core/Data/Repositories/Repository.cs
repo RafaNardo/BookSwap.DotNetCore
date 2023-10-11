@@ -66,6 +66,13 @@ public abstract class Repository<TEntity, TDbContext> : IRepository<TEntity>
         return entity;
     }
 
+    public virtual async Task<ICollection<TEntity>> AddRangeAsync(List<TEntity> entities)
+    {
+        await Context.Set<TEntity>().AddRangeAsync(entities);
+
+        return entities;
+    }
+
     public virtual async Task<TEntity> UpdateAsync(TEntity entity)
     {
         Context.Set<TEntity>().Update(entity);
