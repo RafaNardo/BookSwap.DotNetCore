@@ -1,7 +1,4 @@
 ﻿using BookSwap.BooksService.Modules.Books.Interfaces;
-using BookSwap.Shared.Core.EndpointFilters;
-using BookSwap.Shared.Core.Endpoints;
-using BookSwap.Shared.Core.Exceptions;
 using BookSwap.Shared.Core.Swagger;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
@@ -16,7 +13,7 @@ namespace BookSwap.BooksService.Modules.Books.Endpoints.Books.Update
         private readonly IAuthorRepository _authorRepository;
 
         public UpdateBookEndpoint(
-            IBooksRepository booksRepository, 
+            IBooksRepository booksRepository,
             IGenreRepository genreRepository,
             IAuthorRepository authorRepository,
             IOutputCacheStore outputCacheStore)
@@ -26,8 +23,8 @@ namespace BookSwap.BooksService.Modules.Books.Endpoints.Books.Update
             _authorRepository = authorRepository;
             _outputCacheStore = outputCacheStore;
         }
-            
-        public IEndpointConventionBuilder MapEndpoint(IEndpointRouteBuilder builder) 
+
+        public IEndpointConventionBuilder MapEndpoint(IEndpointRouteBuilder builder)
             => builder.MapPut("/api/books/{id:guid}", HandleAsync)
                 .WithName("UpdateBook")
                 .WithTags("Books")
@@ -40,13 +37,13 @@ namespace BookSwap.BooksService.Modules.Books.Endpoints.Books.Update
                 .WithOpenApi();
 
         public async Task HandleAsync(
-            [FromBody] UpdateBookRequest request, 
+            [FromBody] UpdateBookRequest request,
             [FromRoute] Guid id,
             CancellationToken ct
         )
         {
             var book = await _booksRepository.FindAsync(id);
-           
+
             var genre = await _genreRepository.FindAsync(request.GenreId, false);
             if (genre is null)
                 throw new BadRequestException("Please provide a valid genre.");

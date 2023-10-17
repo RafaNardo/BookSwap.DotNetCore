@@ -1,18 +1,19 @@
 ﻿using BookSwap.BooksService.Modules.Books.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookSwap.BooksService.Modules.Books.Data.Context;
-
-public class BooksServiceDbContext : DbContext
+namespace BookSwap.BooksService.Modules.Books.Data.Context
 {
-    public DbSet<Book> Books { get; set; } = null!;
-    public DbSet<Genre> BookGenres { get; set; } = null!;
-    public DbSet<Author> Authors { get; set; } = null!;
-
-    public BooksServiceDbContext(DbContextOptions<BooksServiceDbContext> options) : base(options) { }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    public class BooksServiceDbContext : DbContext
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
+        public DbSet<Book> Books { get; set; } = null!;
+        public DbSet<Genre> BookGenres { get; set; } = null!;
+        public DbSet<Author> Authors { get; set; } = null!;
+
+        public BooksServiceDbContext(DbContextOptions<BooksServiceDbContext> options) : base(options) { }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
+        }
     }
 }

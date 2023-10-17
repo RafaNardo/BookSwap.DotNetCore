@@ -1,7 +1,7 @@
-﻿using System.Reflection;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
+using System.Reflection;
 
 namespace BookSwap.Shared.Core.DI
 {
@@ -24,11 +24,11 @@ namespace BookSwap.Shared.Core.DI
                     ConnectTimeout = 5000,
                     SyncTimeout = 5000,
                     DefaultDatabase = 0
-                 };
+                };
             });
 
             return services;
         }
     }
 }
-    
+

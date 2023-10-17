@@ -2,27 +2,28 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace BookSwap.Shared.Core.DI;
-
-public static class SwaggerInjection
+namespace BookSwap.Shared.Core.DI
 {
-    public static IServiceCollection AddSwagger(this IServiceCollection services)
+    public static class SwaggerInjection
     {
-        services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen(c => c.EnableAnnotations());
-
-        return services;
-    }
-
-    public static WebApplication ConfigureSwagger(this WebApplication app)
-    {
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
+        public static IServiceCollection AddSwagger(this IServiceCollection services)
         {
-            app.UseSwagger();
-            SwaggerUIBuilderExtensions.UseSwaggerUI(app);
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen(c => c.EnableAnnotations());
+
+            return services;
         }
 
-        return app;
+        public static WebApplication ConfigureSwagger(this WebApplication app)
+        {
+            // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                SwaggerUIBuilderExtensions.UseSwaggerUI(app);
+            }
+
+            return app;
+        }
     }
 }

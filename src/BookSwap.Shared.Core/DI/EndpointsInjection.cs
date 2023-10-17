@@ -4,85 +4,87 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace BookSwap.Shared.Core.DI;
-
-public static class EndpointsInjection
+namespace BookSwap.Shared.Core.DI
 {
-    private static List<Type> EndpointTypes { get; } = LoadEndpointTypes();
-    
-    private static List<IEndpoint> Endpoints => new();
-
-    public static IServiceCollection AddEndpoints(this IServiceCollection services)
+    public static class EndpointsInjection
     {
-        foreach (var endpoint in EndpointTypes)
-            services.AddTransient(endpoint);
+        private static List<Type> EndpointTypes { get; } = LoadEndpointTypes();
 
-        return services;
-    }
+        private static List<IEndpoint> Endpoints => new();
 
-    public static WebApplication UseEndpoints(this WebApplication builder)
-    {
-        var scopedService = builder
-            .Services
-            .CreateScope()
-            .ServiceProvider;
-
-        foreach (var endpointType in EndpointTypes)
+        public static IServiceCollection AddEndpoints(this IServiceCollection services)
         {
-            var endpoint = (IEndpoint)scopedService.GetRequiredService(endpointType);
+            foreach (var endpoint in EndpointTypes)
+                services.AddTransient(endpoint);
 
-            endpoint
-                .MapEndpoint(builder)
-                .AddEndpointFilter(async (filterContext, next) => { 
-                    
-                    BindEndpointProperties(filterContext.HttpContext, endpoint);
-
-                    return await next.Invoke(filterContext);
-                });
-
-            Endpoints.Add(endpoint);
+            return services;
         }
 
-        return builder;
-    }
-
-    private static void BindEndpointProperties(HttpContext context, IEndpoint endpoint)
-    {
-        var type = endpoint.GetType();
-
-        var properties = type.GetRuntimeProperties();
-
-        foreach (var property in properties)
+        public static WebApplication UseEndpoints(this WebApplication builder)
         {
-            var service = context.RequestServices.GetService(property.PropertyType);
+            var scopedService = builder
+                .Services
+                .CreateScope()
+                .ServiceProvider;
 
-            if (service == null) continue;
+            foreach (var endpointType in EndpointTypes)
+            {
+                var endpoint = (IEndpoint)scopedService.GetRequiredService(endpointType);
 
-            property.SetValue(endpoint, service, null);
+                endpoint
+                    .MapEndpoint(builder)
+                    .AddEndpointFilter(async (filterContext, next) =>
+                    {
+
+                        BindEndpointProperties(filterContext.HttpContext, endpoint);
+
+                        return await next.Invoke(filterContext);
+                    });
+
+                Endpoints.Add(endpoint);
+            }
+
+            return builder;
         }
 
-        var fields = type.GetRuntimeFields();
-
-        foreach (var field in fields)
+        private static void BindEndpointProperties(HttpContext context, IEndpoint endpoint)
         {
-            var service = context.RequestServices.GetService(field.FieldType);
+            var type = endpoint.GetType();
 
-            if (service == null) continue;
+            var properties = type.GetRuntimeProperties();
 
-            field.SetValue(endpoint, service, BindingFlags.Public | BindingFlags.Instance, null, null);
+            foreach (var property in properties)
+            {
+                var service = context.RequestServices.GetService(property.PropertyType);
+
+                if (service == null) continue;
+
+                property.SetValue(endpoint, service, null);
+            }
+
+            var fields = type.GetRuntimeFields();
+
+            foreach (var field in fields)
+            {
+                var service = context.RequestServices.GetService(field.FieldType);
+
+                if (service == null) continue;
+
+                field.SetValue(endpoint, service, BindingFlags.Public | BindingFlags.Instance, null, null);
+            }
         }
-    }
 
-    private static List<Type> LoadEndpointTypes()
-    {
-        var assembly = Assembly.GetEntryAssembly();
-        
-        var endpoints = assembly!
-            .GetTypes()
-            .Where(t => t.IsAssignableTo(typeof(IEndpoint)))
-            .Where(t => !t.IsAbstract)
-            .ToList();
-        
-        return endpoints;
+        private static List<Type> LoadEndpointTypes()
+        {
+            var assembly = Assembly.GetEntryAssembly();
+
+            var endpoints = assembly!
+                .GetTypes()
+                .Where(t => t.IsAssignableTo(typeof(IEndpoint)))
+                .Where(t => !t.IsAbstract)
+                .ToList();
+
+            return endpoints;
+        }
     }
 }

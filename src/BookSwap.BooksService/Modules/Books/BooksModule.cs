@@ -5,24 +5,24 @@ using BookSwap.Shared.Core.Data.UoW;
 using BookSwap.Shared.Core.Modules;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookSwap.BooksService.Modules.Books;
-
-public class BooksModule : IModule
+namespace BookSwap.BooksService.Modules.Books
 {
-    public IServiceCollection RegisterModule(IServiceCollection builder, IConfiguration configuration)
+    public class BooksModule : IModule
     {
-        builder.AddDbContext<BooksServiceDbContext>(options =>
+        public IServiceCollection RegisterModule(IServiceCollection builder, IConfiguration configuration)
         {
-            options.UseSqlServer(configuration.GetConnectionString("BooksServiceDb"));
-        });
+            builder.AddDbContext<BooksServiceDbContext>(options =>
+            {
+                options.UseSqlServer(configuration.GetConnectionString("BooksServiceDb"));
+            });
 
-        builder.AddTransient<IUnitOfWork, UnitOfWork<BooksServiceDbContext>>();
+            builder.AddTransient<IUnitOfWork, UnitOfWork<BooksServiceDbContext>>();
 
-        builder.AddScoped<IBooksRepository, BooksRepository>();
-        builder.AddScoped<IAuthorRepository, AuthorRepository>();
-        builder.AddScoped<IGenreRepository, GenreRepository>();
+            builder.AddScoped<IBooksRepository, BooksRepository>();
+            builder.AddScoped<IAuthorRepository, AuthorRepository>();
+            builder.AddScoped<IGenreRepository, GenreRepository>();
 
-        return builder;
+            return builder;
+        }
     }
 }
-

@@ -1,12 +1,13 @@
 ﻿using FluentValidation;
 
-namespace BookSwap.BooksService.Modules.Books.Endpoints.Genres.Update;
-
-public class UpdateGenreRequestValidator : AbstractValidator<UpdateGenreRequest>
+namespace BookSwap.BooksService.Modules.Books.Endpoints.Genres.Update
 {
-    public UpdateGenreRequestValidator()
+    public class UpdateGenreRequestValidator : AbstractValidator<UpdateGenreRequest>
     {
-        RuleFor(x => x.Name).NotEmpty().MaximumLength(50);
-        RuleFor(x => x.Description).NotEmpty().MaximumLength(500);
+        public UpdateGenreRequestValidator()
+        {
+            RuleFor(x => x.Name).NotEmpty().MaximumLength(50);
+            RuleFor(x => x.Description).NotEmpty().MaximumLength(500);
+        }
     }
 }

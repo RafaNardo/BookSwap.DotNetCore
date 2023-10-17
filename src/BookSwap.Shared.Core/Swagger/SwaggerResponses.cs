@@ -1,5 +1,4 @@
-﻿using BookSwap.Shared.Core.Models;
-using BookSwap.Shared.Core.Models.Responses;
+﻿using BookSwap.Shared.Core.Models.Responses;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 

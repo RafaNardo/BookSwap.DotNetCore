@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using BookSwap.Shared.Core.Modules;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using BookSwap.Shared.Core.Modules;
 
 namespace BookSwap.Shared.Core.DI
 {
@@ -18,8 +17,8 @@ namespace BookSwap.Shared.Core.DI
                 .GetTypes()
                 .Where(p => p.IsClass && p.IsAssignableTo(typeof(IModule)))
                 .Select(Activator.CreateInstance)
-                .Cast<IModule>();;
-            
+                .Cast<IModule>(); ;
+
             foreach (var module in modules)
                 module.RegisterModule(services, configuration);
 

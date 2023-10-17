@@ -6,7 +6,7 @@ namespace BookSwap.Shared.Core.Exceptions
     {
         public HttpStatusCode StatusCode { get; private set; }
 
-        protected StatusCodeException(HttpStatusCode statusCode, string message) : base(message) 
+        protected StatusCodeException(HttpStatusCode statusCode, string message) : base(message)
         {
             StatusCode = statusCode;
         }

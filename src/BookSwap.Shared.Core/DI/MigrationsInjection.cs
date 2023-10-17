@@ -1,27 +1,28 @@
-﻿using System.Reflection;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
-namespace BookSwap.Shared.Core.DI;
-
-public static class MigrationsInjection
+namespace BookSwap.Shared.Core.DI
 {
-        
-    public static WebApplication MigrateDatabases(this WebApplication app, Assembly assembly)
+    public static class MigrationsInjection
     {
-        var dbContextTypes = assembly
-            .GetTypes()
-            .Where(p => p.IsClass && p.IsAssignableTo(typeof(DbContext)))
-            .ToList();
 
-        foreach (var dbContextType in dbContextTypes)
+        public static WebApplication MigrateDatabases(this WebApplication app, Assembly assembly)
         {
-            using var scope = app.Services.CreateScope();
-            var dbContext = scope.ServiceProvider.GetRequiredService(dbContextType) as DbContext;
-            dbContext?.Database?.Migrate();
-        }
+            var dbContextTypes = assembly
+                .GetTypes()
+                .Where(p => p.IsClass && p.IsAssignableTo(typeof(DbContext)))
+                .ToList();
 
-        return app;
+            foreach (var dbContextType in dbContextTypes)
+            {
+                using var scope = app.Services.CreateScope();
+                var dbContext = scope.ServiceProvider.GetRequiredService(dbContextType) as DbContext;
+                dbContext?.Database?.Migrate();
+            }
+
+            return app;
+        }
     }
 }

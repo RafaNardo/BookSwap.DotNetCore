@@ -1,49 +1,47 @@
 ﻿using BookSwap.BooksService.Modules.Books.Interfaces;
-using BookSwap.Shared.Core.EndpointFilters;
-using BookSwap.Shared.Core.Endpoints;
 using BookSwap.Shared.Core.Swagger;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
 
-namespace BookSwap.BooksService.Modules.Books.Endpoints.Authors.Update;
-
-public class UpdateAuthorEndpoint : IEndpoint
+namespace BookSwap.BooksService.Modules.Books.Endpoints.Authors.Update
 {
-    private readonly IAuthorRepository _authorRepository;
-    private readonly IOutputCacheStore _outputCacheStore;
-
-    public UpdateAuthorEndpoint(IAuthorRepository authorRepository, IOutputCacheStore outputCacheStore) 
+    public class UpdateAuthorEndpoint : IEndpoint
     {
-        _authorRepository = authorRepository;
-        _outputCacheStore = outputCacheStore;
-    }
+        private readonly IAuthorRepository _authorRepository;
+        private readonly IOutputCacheStore _outputCacheStore;
 
-    public IEndpointConventionBuilder MapEndpoint(IEndpointRouteBuilder builder)
-        => builder.MapPut("/api/authors/{id:guid}", HandleAsync)
-            .WithName("UpdateAuthor")
-            .WithTags("Authors")
-            .WithDescription("Update an existing author")
-            .ProducesOk()
-            .ProducesUnprocessableEntity()
-            .ProducesBadRequest()
-            .WithTransaction()
-            .WithOpenApi();
+        public UpdateAuthorEndpoint(IAuthorRepository authorRepository, IOutputCacheStore outputCacheStore)
+        {
+            _authorRepository = authorRepository;
+            _outputCacheStore = outputCacheStore;
+        }
 
-    public async Task<Guid> HandleAsync(
-        [FromBody] UpdateAuthorRequest request, 
-        [FromRoute] Guid id,
-        CancellationToken ct)
-    {
-        var author = await _authorRepository.FindAsync(id);
+        public IEndpointConventionBuilder MapEndpoint(IEndpointRouteBuilder builder)
+            => builder.MapPut("/api/authors/{id:guid}", HandleAsync)
+                .WithName("UpdateAuthor")
+                .WithTags("Authors")
+                .WithDescription("Update an existing author")
+                .ProducesOk()
+                .ProducesUnprocessableEntity()
+                .ProducesBadRequest()
+                .WithTransaction()
+                .WithOpenApi();
 
-        author.Update(request.Name, request.About, request.ImageUrl);
+        public async Task<Guid> HandleAsync(
+            [FromBody] UpdateAuthorRequest request,
+            [FromRoute] Guid id,
+            CancellationToken ct)
+        {
+            var author = await _authorRepository.FindAsync(id);
 
-        await _authorRepository.UpdateAsync(author);
+            author.Update(request.Name, request.About, request.ImageUrl);
 
-        await _outputCacheStore.EvictByTagAsync("authors", ct);
+            await _authorRepository.UpdateAsync(author);
 
-        return author.Id;
+            await _outputCacheStore.EvictByTagAsync("authors", ct);
+
+            return author.Id;
+        }
     }
 }
-

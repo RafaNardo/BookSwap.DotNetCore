@@ -1,22 +1,22 @@
 ﻿using FluentValidation;
 
-namespace BookSwap.BooksService.Modules.Books.Endpoints.Authors.Add;
-
-public class AddAuthorRequestValidator : AbstractValidator<AddAuthorRequest>
+namespace BookSwap.BooksService.Modules.Books.Endpoints.Authors.Add
 {
-    public AddAuthorRequestValidator()
+    public class AddAuthorRequestValidator : AbstractValidator<AddAuthorRequest>
     {
-        RuleFor(x => x.Name)
-            .NotEmpty()
-            .MaximumLength(100);
+        public AddAuthorRequestValidator()
+        {
+            RuleFor(x => x.Name)
+                .NotEmpty()
+                .MaximumLength(100);
 
-        RuleFor(x => x.About)
-            .NotEmpty()
-            .MaximumLength(500);
+            RuleFor(x => x.About)
+                .NotEmpty()
+                .MaximumLength(500);
 
-        RuleFor(x => x.ImageUrl)
-            .NotEmpty()
-            .MaximumLength(500);
+            RuleFor(x => x.ImageUrl)
+                .NotEmpty()
+                .MaximumLength(500);
+        }
     }
 }
-
