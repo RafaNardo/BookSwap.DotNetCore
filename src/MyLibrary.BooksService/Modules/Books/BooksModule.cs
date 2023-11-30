@@ -16,7 +16,7 @@ namespace MyLibrary.BooksService.Modules.Books
                 options.UseSqlServer(configuration.GetConnectionString("BooksServiceDb"));
             });
 
-            builder.AddTransient<IUnitOfWork, UnitOfWork<BooksServiceDbContext>>();
+            builder.AddScoped<IUnitOfWork, UnitOfWork<BooksServiceDbContext>>();
 
             builder.AddScoped<IBooksRepository, BooksRepository>();
             builder.AddScoped<IAuthorRepository, AuthorRepository>();

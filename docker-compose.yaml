@@ -6,6 +6,7 @@ services:
       - "6379:6379"
     environment:
       - REDIS_PASSWORD=Password*123
+
   database:
     image: "mcr.microsoft.com/mssql/server:2019-latest"
     ports:
