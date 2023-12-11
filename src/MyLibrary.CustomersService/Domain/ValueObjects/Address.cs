@@ -1,4 +1,4 @@
-﻿namespace MyLibrary.CustomersService.Modules.Customers.ValueObjects
+﻿namespace MyLibrary.CustomersService.Domain.ValueObjects
 {
     public class Address
     {

@@ -1,7 +1,7 @@
-﻿using MyLibrary.CustomersService.Modules.Customers.ValueObjects;
+﻿using MyLibrary.CustomersService.Domain.ValueObjects;
 using MyLibrary.Shared.Core.Models;
 
-namespace MyLibrary.CustomersService.Modules.Customers.Entities
+namespace MyLibrary.CustomersService.Domain.Entities
 {
     public class Customer : Entity
     {

@@ -26,10 +26,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Modules\Books\Endpoints\Books\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\MyLibrary.Shared.Core\MyLibrary.Shared.Core.csproj" />
     </ItemGroup>
 </Project>

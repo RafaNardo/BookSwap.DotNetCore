@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyLibrary.CustomersService.Modules.Customers.Entities;
+using MyLibrary.CustomersService.Domain.Entities;
 
-namespace MyLibrary.CustomersService.Modules.Customers.Data.Context
+namespace MyLibrary.CustomersService.Data.Context
 {
     public class CustomersServiceDbContext : DbContext
     {

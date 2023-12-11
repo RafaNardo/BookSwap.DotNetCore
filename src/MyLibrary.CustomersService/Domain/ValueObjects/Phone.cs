@@ -1,4 +1,4 @@
-﻿namespace MyLibrary.CustomersService.Modules.Customers.ValueObjects
+﻿namespace MyLibrary.CustomersService.Domain.ValueObjects
 {
     public class Phone
     {
@@ -42,6 +42,13 @@
         private static bool IsValidPrefix(string prefix) => prefix.Length == 3 && int.TryParse(prefix, out _);
         private static bool IsValidLineNumber(string lineNumber) => lineNumber.Length == 4 && int.TryParse(lineNumber, out _);
         private static bool IsValidPhoneNumber(string phoneNumber) => phoneNumber.Length == 10 && int.TryParse(phoneNumber, out _);
-    }
 
+        //Add method to check if phone number is valid
+        public static bool IsValid(string phoneNumber)
+        {
+            phoneNumber = new string(phoneNumber.Where(char.IsDigit).ToArray());
+
+            return IsValidPhoneNumber(phoneNumber);
+        }
+    }
 }

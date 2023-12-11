@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyLibrary.CustomersService.Modules.Customers.Data.Context;
-using MyLibrary.CustomersService.Modules.Customers.Data.Repositories;
-using MyLibrary.CustomersService.Modules.Customers.Interfaces;
+using MyLibrary.CustomersService.Data.Context;
+using MyLibrary.CustomersService.Data.Repositories;
+using MyLibrary.CustomersService.Domain.Interfaces;
 using MyLibrary.Shared.Core.Data.UoW;
 using MyLibrary.Shared.Core.Modules;
 
-namespace MyLibrary.CustomersService.Modules.Customers
+namespace MyLibrary.CustomersService.Domain
 {
     public class CustomersModule : IModule
     {

@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MyLibrary.CustomersService.Modules.Customers.Entities;
-using MyLibrary.CustomersService.Modules.Customers.ValueObjects;
+using MyLibrary.CustomersService.Domain.Entities;
+using MyLibrary.CustomersService.Domain.ValueObjects;
 
-namespace MyLibrary.CustomersService.Modules.Customers.Data.Context.Mappers
+namespace MyLibrary.CustomersService.Data.Context.Mappers
 {
     public class CustomerMap : IEntityTypeConfiguration<Customer>
     {
