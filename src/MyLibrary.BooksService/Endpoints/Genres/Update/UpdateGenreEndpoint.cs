@@ -1,7 +1,7 @@
-using MyLibrary.BooksService.Modules.Books.Interfaces;
-using MyLibrary.Shared.Core.Swagger;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
+using MyLibrary.BooksService.Modules.Books.Interfaces;
+using MyLibrary.Shared.Core.Swagger;
 
 namespace MyLibrary.BooksService.Modules.Books.Endpoints.Genres.Update
 {

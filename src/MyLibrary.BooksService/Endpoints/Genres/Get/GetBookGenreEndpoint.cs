@@ -1,7 +1,7 @@
+using Microsoft.AspNetCore.Mvc;
 using MyLibrary.BooksService.Modules.Books.Entities;
 using MyLibrary.BooksService.Modules.Books.Interfaces;
 using MyLibrary.Shared.Core.Swagger;
-using Microsoft.AspNetCore.Mvc;
 
 namespace MyLibrary.BooksService.Modules.Books.Endpoints.Genres.Get;
 

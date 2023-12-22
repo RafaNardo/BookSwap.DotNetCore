@@ -1,8 +1,8 @@
+using Microsoft.AspNetCore.Mvc;
 using MyLibrary.BooksService.Modules.Books.Entities;
 using MyLibrary.BooksService.Modules.Books.Interfaces;
 using MyLibrary.Shared.Core.Data.Specifications;
 using MyLibrary.Shared.Core.Swagger;
-using Microsoft.AspNetCore.Mvc;
 
 namespace MyLibrary.BooksService.Modules.Books.Endpoints.Authors.List
 {
@@ -25,8 +25,7 @@ namespace MyLibrary.BooksService.Modules.Books.Endpoints.Authors.List
         {
             var spec = new Specification<Author>()
                 .AddCriteriaIf(x => x.Name.Contains(name!), !string.IsNullOrEmpty(name))
-                .AddOrderBy(x => x.Name)
-                .AddOrderByDescending(x => x.Id);
+                .AddOrderBy(x => x.Name);
 
             return await _authorRepository.ListAsync(spec);
         }

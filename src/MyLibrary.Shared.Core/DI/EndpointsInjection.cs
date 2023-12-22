@@ -1,7 +1,7 @@
-using MyLibrary.Shared.Core.Endpoints;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using MyLibrary.Shared.Core.Endpoints;
 using System.Reflection;
 
 namespace MyLibrary.Shared.Core.DI

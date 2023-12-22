@@ -1,8 +1,8 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 using MyLibrary.BooksService.Modules.Books.Entities;
 using MyLibrary.BooksService.Modules.Books.Interfaces;
 using MyLibrary.Shared.Core.Swagger;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.OutputCaching;
 
 namespace MyLibrary.BooksService.Modules.Books.Endpoints.Books.Add
 {

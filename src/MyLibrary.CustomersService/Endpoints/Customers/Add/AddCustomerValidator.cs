@@ -3,7 +3,7 @@ using MyLibrary.CustomersService.Domain.ValueObjects;
 
 namespace MyLibrary.CustomersService.Endpoints.Customers.Add
 {
-    public class AddCustomerValidator  : AbstractValidator<AddCustomerRequest>
+    public class AddCustomerValidator : AbstractValidator<AddCustomerRequest>
     {
         public AddCustomerValidator()
         {

@@ -6,15 +6,18 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/MyLibrary.CustomersService/MyLibrary.CustomersService.csproj", "src/MyLibrary.CustomersService/"]
-RUN dotnet restore "src/MyLibrary.CustomersService/MyLibrary.CustomersService.csproj"
+COPY ["src/MyLibrary.Shared.Core/MyLibrary.Shared.Core.csproj", "src/MyLibrary.Shared.Core/"]
+RUN dotnet restore "./src/MyLibrary.CustomersService/./MyLibrary.CustomersService.csproj"
 COPY . .
 WORKDIR "/src/src/MyLibrary.CustomersService"
-RUN dotnet build "MyLibrary.CustomersService.csproj" -c Release -o /app/build
+RUN dotnet build "./MyLibrary.CustomersService.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "MyLibrary.CustomersService.csproj" -c Release -o /app/publish /p:UseAppHost=false
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "./MyLibrary.CustomersService.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

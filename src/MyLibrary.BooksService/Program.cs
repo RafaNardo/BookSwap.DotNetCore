@@ -1,8 +1,8 @@
 global using MyLibrary.Shared.Core.EndpointFilters;
 global using MyLibrary.Shared.Core.Endpoints;
 global using MyLibrary.Shared.Core.Exceptions;
-using MyLibrary.Shared.Core.DI;
 using FluentValidation;
+using MyLibrary.Shared.Core.DI;
 using System.Reflection;
 
 

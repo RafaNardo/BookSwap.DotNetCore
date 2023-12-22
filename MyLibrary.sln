@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyLibrary.BooksService", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyLibrary.Shared.Core", "src\MyLibrary.Shared.Core\MyLibrary.Shared.Core.csproj", "{F2D74C76-8388-4EB5-8AD4-209CEC110BA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyLibrary.CustomersService", "src\MyLibrary.CustomersService\MyLibrary.CustomersService.csproj", "{848FF0A9-7114-4C82-B7C4-74C76E944D1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyLibrary.CustomersService", "src\MyLibrary.CustomersService\MyLibrary.CustomersService.csproj", "{848FF0A9-7114-4C82-B7C4-74C76E944D1C}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{1C4BBC22-7E9D-457F-A745-CEA3B4CF1ECA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,10 @@ Global
 		{848FF0A9-7114-4C82-B7C4-74C76E944D1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{848FF0A9-7114-4C82-B7C4-74C76E944D1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{848FF0A9-7114-4C82-B7C4-74C76E944D1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C4BBC22-7E9D-457F-A745-CEA3B4CF1ECA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C4BBC22-7E9D-457F-A745-CEA3B4CF1ECA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C4BBC22-7E9D-457F-A745-CEA3B4CF1ECA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C4BBC22-7E9D-457F-A745-CEA3B4CF1ECA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

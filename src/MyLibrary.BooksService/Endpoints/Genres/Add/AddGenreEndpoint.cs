@@ -1,7 +1,7 @@
+using Microsoft.Extensions.Caching.Distributed;
 using MyLibrary.BooksService.Modules.Books.Entities;
 using MyLibrary.BooksService.Modules.Books.Interfaces;
 using MyLibrary.Shared.Core.Swagger;
-using Microsoft.Extensions.Caching.Distributed;
 
 namespace MyLibrary.BooksService.Modules.Books.Endpoints.Genres.Add;
 

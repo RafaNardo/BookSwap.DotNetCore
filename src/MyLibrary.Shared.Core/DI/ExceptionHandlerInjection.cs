@@ -1,9 +1,9 @@
-using MyLibrary.Shared.Core.Exceptions;
-using MyLibrary.Shared.Core.Models.Responses;
 using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using MyLibrary.Shared.Core.Exceptions;
+using MyLibrary.Shared.Core.Models.Responses;
 
 namespace MyLibrary.Shared.Core.DI
 {

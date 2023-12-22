@@ -1,0 +1,54 @@
+version: '3.4'
+
+services:
+  cache-server:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_PASSWORD=Password*123
+
+  database-server:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    ports:
+      - "1440:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Password*123
+      
+  service-books:
+    image: mylibrary.service.books
+    build:
+      context: .
+      dockerfile: src/MyLibrary.BooksService/Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - database-server
+      - cache-server
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__BooksServiceDb=Server=database-server;Database=Books;User Id=sa;Password=Password*123;Persist Security Info=False;Encrypt=False;TrustServerCertificate=False;
+      - DistributedCache__Server=cache-server
+      - DistributedCache__Port=cache-server.port
+      - DistributedCache__Password=Password*123
+      - DistributedCache__UseSsl=false
+      
+  service-customers:
+    image: mylibrary.service.customers
+    build:
+      context: .
+      dockerfile: src/MyLibrary.CustomersService/Dockerfile
+    ports:
+      - "8081:80"
+    depends_on:
+      - database-server
+      - cache-server
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__CurtomerServiceDb=Server=database-server;Database=Customers;User Id=sa;Password=Password*123;Persist Security Info=False;Encrypt=False;TrustServerCertificate=False;
+      - DistributedCache__Server=cache-server
+      - DistributedCache__Port=cache-server.port
+      - DistributedCache__Password=Password*123
+      - DistributedCache__UseSsl=false
+

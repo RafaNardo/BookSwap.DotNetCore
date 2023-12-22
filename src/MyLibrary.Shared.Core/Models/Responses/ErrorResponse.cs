@@ -1,5 +1,5 @@
-using MyLibrary.Shared.Core.Exceptions;
 using FluentValidation;
+using MyLibrary.Shared.Core.Exceptions;
 
 namespace MyLibrary.Shared.Core.Models.Responses
 {

@@ -1,6 +1,6 @@
-using MyLibrary.BooksService.Modules.Books.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using MyLibrary.BooksService.Modules.Books.Entities;
 
 namespace MyLibrary.BooksService.Modules.Books.Data.Context.Mappers
 {

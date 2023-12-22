@@ -1,6 +1,6 @@
-using MyLibrary.Shared.Core.Data.UoW;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using MyLibrary.Shared.Core.Data.UoW;
 
 namespace MyLibrary.Shared.Core.EndpointFilters
 {

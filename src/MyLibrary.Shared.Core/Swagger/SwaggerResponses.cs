@@ -1,6 +1,6 @@
-using MyLibrary.Shared.Core.Models.Responses;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using MyLibrary.Shared.Core.Models.Responses;
 
 namespace MyLibrary.Shared.Core.Swagger
 {

@@ -1,9 +1,9 @@
-using MyLibrary.BooksService.Modules.Books.Entities;
-using MyLibrary.BooksService.Modules.Books.Interfaces;
-using MyLibrary.Shared.Core.Swagger;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
+using MyLibrary.BooksService.Modules.Books.Entities;
+using MyLibrary.BooksService.Modules.Books.Interfaces;
+using MyLibrary.Shared.Core.Swagger;
 
 namespace MyLibrary.BooksService.Modules.Books.Endpoints.Authors.Add
 {

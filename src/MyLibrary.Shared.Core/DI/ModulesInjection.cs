@@ -1,6 +1,6 @@
-using MyLibrary.Shared.Core.Modules;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MyLibrary.Shared.Core.Modules;
 using System.Reflection;
 
 namespace MyLibrary.Shared.Core.DI
