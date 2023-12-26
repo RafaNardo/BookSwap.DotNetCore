@@ -1,15 +1,21 @@
 using MyLibrary.BooksService.Modules.Books.Entities;
 using MyLibrary.BooksService.Modules.Books.Interfaces;
 using MyLibrary.Shared.Core.Data.Specifications;
+using MyLibrary.Shared.Core.Data.UoW;
 using MyLibrary.Shared.Core.Swagger;
 
 namespace MyLibrary.BooksService.Modules.Books.Endpoints.Seed
 {
-    public class SeedDatabase : IEndpoint
+    public class SeedDatabaseEndpoint : IEndpoint
     {
         private readonly IBooksRepository _booksRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public SeedDatabase(IBooksRepository booksRepository) => _booksRepository = booksRepository;
+        public SeedDatabaseEndpoint(IBooksRepository booksRepository, IUnitOfWork unitOfWork)
+        {
+            _booksRepository = booksRepository;
+            _unitOfWork = unitOfWork;
+        }
 
         public IEndpointConventionBuilder MapEndpoint(IEndpointRouteBuilder builder)
             => builder.MapPost("/api/seed", HandleAsync)
@@ -23,21 +29,17 @@ namespace MyLibrary.BooksService.Modules.Books.Endpoints.Seed
 
         public async Task<IEnumerable<Book>> HandleAsync()
         {
-            var books = SeedData.GetBooks();
-
-            var firstBookTitle = books.First().Title;
-
-            var spec = new Specification<Book>().AddCriteria(b => b.Title.Equals(firstBookTitle));
-
-            var foundBook = await _booksRepository.AnyAsync(spec);
-
-            if (!foundBook)
+            var hasAnyBook = await _booksRepository.AnyAsync();
+            if (hasAnyBook)
             {
-                await _booksRepository.AddRangeAsync(books);
-                return books;
+                return Enumerable.Empty<Book>();
             }
 
-            return Enumerable.Empty<Book>();
+            var books = SeedDatabaseData.GetBooks();
+
+            await _booksRepository.AddRangeAsync(books);
+
+            return books;
         }
     }
 }

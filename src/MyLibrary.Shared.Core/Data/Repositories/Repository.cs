@@ -59,6 +59,11 @@ namespace MyLibrary.Shared.Core.Data.Repositories
                 .AnyAsync(x => x.Id == id);
         }
 
+        public virtual async Task<bool> AnyAsync()
+        {
+            return await Context.Set<TEntity>().AnyAsync();
+        }
+
         public virtual async Task<TEntity> AddAsync(TEntity entity)
         {
             await Context.Set<TEntity>().AddAsync(entity);

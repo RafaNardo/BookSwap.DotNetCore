@@ -10,6 +10,7 @@ namespace MyLibrary.Shared.Core.Data.Repositories
         Task<IEnumerable<TEntity>> ListAsync(ISpecification<TEntity> spec);
         Task<bool> AnyAsync(ISpecification<TEntity> spec);
         Task<bool> AnyAsync(Guid id);
+        Task<bool> AnyAsync();
         Task<TEntity> AddAsync(TEntity entity);
         Task<ICollection<TEntity>> AddRangeAsync(List<TEntity> entities);
         Task<TEntity> UpdateAsync(TEntity entity);

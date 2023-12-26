@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MyLibrary.Shared.Core.Data.UoW;
 
@@ -10,25 +11,29 @@ namespace MyLibrary.Shared.Core.EndpointFilters
         {
             var unitOfWork = context.HttpContext.RequestServices.GetRequiredService<IUnitOfWork>();
 
-            try
+            var strategy = await unitOfWork.CreateExecutionStrategy();
+
+            return await strategy.ExecuteAsync(async () =>
             {
-                await unitOfWork.BeginTransactionAsync();
+                using (var transaction = await unitOfWork.BeginTransactionAsync())
+                {
+                    try
+                    {
+                        var result = await next.Invoke(context);
 
-                var result = await next.Invoke(context);
+                        await unitOfWork.SaveChangesAsync();
 
-                await unitOfWork.SaveChangesAsync();
+                        await transaction.CommitAsync();
 
-                await unitOfWork.CommitTransactionAsync();
-
-                return result;
-
-            }
-            catch (Exception)
-            {
-                await unitOfWork.RollbackTransactionAsync();
-
-                throw;
-            }
+                        return result;
+                    }
+                    catch (Exception)
+                    {
+                        await transaction.RollbackAsync();
+                        throw;
+                    }
+                }
+            });
         }
     }
 }

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace MyLibrary.Shared.Core.Data.UoW
 {
@@ -8,24 +9,19 @@ namespace MyLibrary.Shared.Core.Data.UoW
 
         public UnitOfWork(TDbContext dbContext) => _dbContext = dbContext;
 
-        public async Task BeginTransactionAsync()
+        public async Task<IExecutionStrategy> CreateExecutionStrategy() 
         {
-            await _dbContext.Database.BeginTransactionAsync();
+            return await Task.FromResult(_dbContext.Database.CreateExecutionStrategy());
+        }
+
+        public async Task<IDbContextTransaction> BeginTransactionAsync()
+        {
+            return await _dbContext.Database.BeginTransactionAsync();
         }
 
         public async Task SaveChangesAsync()
         {
             await _dbContext.SaveChangesAsync();
-        }
-
-        public async Task CommitTransactionAsync()
-        {
-            await _dbContext.Database.CommitTransactionAsync();
-        }
-
-        public async Task RollbackTransactionAsync()
-        {
-            await _dbContext.Database.RollbackTransactionAsync();
         }
     }
 }
