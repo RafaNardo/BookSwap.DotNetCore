@@ -1,20 +1,16 @@
 using MyLibrary.BooksService.Modules.Books.Entities;
 using MyLibrary.BooksService.Modules.Books.Interfaces;
-using MyLibrary.Shared.Core.Data.Specifications;
-using MyLibrary.Shared.Core.Data.UoW;
 using MyLibrary.Shared.Core.Swagger;
 
 namespace MyLibrary.BooksService.Presentation.Endpoints.Seed
 {
-    public class SeedDatabaseEndpoint : IEndpoint
+    public class SeedDataEndpoint : IEndpoint
     {
         private readonly IBooksRepository _booksRepository;
-        private readonly IUnitOfWork _unitOfWork;
 
-        public SeedDatabaseEndpoint(IBooksRepository booksRepository, IUnitOfWork unitOfWork)
+        public SeedDataEndpoint(IBooksRepository booksRepository)
         {
             _booksRepository = booksRepository;
-            _unitOfWork = unitOfWork;
         }
 
         public IEndpointConventionBuilder MapEndpoint(IEndpointRouteBuilder builder)
@@ -35,7 +31,7 @@ namespace MyLibrary.BooksService.Presentation.Endpoints.Seed
                 return Enumerable.Empty<Book>();
             }
 
-            var books = SeedDatabaseData.GetBooks();
+            var books = SeedData.GetBooks();
 
             await _booksRepository.AddRangeAsync(books);
 

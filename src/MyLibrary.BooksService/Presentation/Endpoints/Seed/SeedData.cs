@@ -2,7 +2,7 @@ using MyLibrary.BooksService.Modules.Books.Entities;
 
 namespace MyLibrary.BooksService.Presentation.Endpoints.Seed
 {
-    public sealed class SeedDatabaseData
+    public sealed class SeedData
     {
         public static List<Book> GetBooks()
         {
