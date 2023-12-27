@@ -12,10 +12,23 @@ namespace MyLibrary.CustomersService.Domain.Entities
 
         private Customer() { }
 
-        public Customer(string name, string email, Address address)
+        internal Customer(string name, string email, Phone phone, Address address)
         {
             Name = name;
             Email = email;
+            Phone = phone;
+            Address = address;
+        }
+
+        internal void Update(string name, string email, string phone)
+        {
+            Name = name;
+            Email = email;
+            Phone = phone;
+        }
+
+        internal void UpdateAddress(Address address)
+        {
             Address = address;
         }
     }
